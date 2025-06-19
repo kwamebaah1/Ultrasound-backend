@@ -3,10 +3,12 @@ from flask_cors import CORS
 import tensorflow as tf
 import numpy as np
 import cv2
+import os
 from tensorflow.keras.models import load_model
 
 app = Flask(__name__)
 CORS(app)
+print("Model path exists:", os.path.exists('assets/checkpoint_enhanced_fine.keras'))
 model = load_model('assets/checkpoint_enhanced_fine.keras')
 
 @app.route('/predict', methods=['POST'])

@@ -20,7 +20,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY gdrive-download.sh ./
 RUN chmod +x ./gdrive-download.sh && \
     mkdir -p /app/assets && \
-    ./gdrive-download.sh 1AbhKB8d-saS6KENc9psmIv5O5j5jGHOy /app/assets/checkpoint_enhanced_fine.keras
+    ./gdrive-download.sh 1AbhKB8d-saS6KENc9psmIv5O5j5jGHOy /assets/checkpoint_enhanced_fine.keras
 
 # Copy app code
 COPY . .
