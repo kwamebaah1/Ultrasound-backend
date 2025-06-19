@@ -10,20 +10,25 @@ RUN apt-get update && apt-get install -y \
     libsm6 \
     libxext6 \
     libxrender-dev \
-    libgl1         
-    
-# Clean up to reduce image size
-RUN rm -rf /var/lib/apt/lists/*
+    libgl1 \
+    curl \
+    unzip && \
+    rm -rf /var/lib/apt/lists/*
 
-# Copy and install Python dependencies
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of your code
+# Create assets folder and download model from Google Drive
+RUN mkdir -p /app/assets && \
+    curl -c cookies.txt -s -L "https://drive.google.com/uc?export=download&id=1AbhKB8d-saS6KENc9psmIv5O5j5jGHOy" > temp.html && \
+    curl -Lb cookies.txt -s -o /app/assets/checkpoint_enhanced_fine.keras "$(cat temp.html | grep -oP 'uc\?export=download[^"]+' | head -n 1 | sed 's/&amp;/\&/g')"
+
+# Copy the rest of the app
 COPY . .
 
-# Expose the Flask app port
+# Expose port
 EXPOSE 5000
 
-# Start your app
+# Start the app
 CMD ["python", "app.py"]
