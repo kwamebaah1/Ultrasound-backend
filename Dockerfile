@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy script and model download step
 COPY gdrive-download.sh ./
 RUN chmod +x ./gdrive-download.sh && \
-    mkdir -p /app/assets && \
+    mkdir -p /assets && \
     ./gdrive-download.sh 1AbhKB8d-saS6KENc9psmIv5O5j5jGHOy /assets/checkpoint_enhanced_fine.keras
 
 # Copy app code
