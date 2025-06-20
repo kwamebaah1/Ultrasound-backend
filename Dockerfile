@@ -22,6 +22,8 @@ RUN chmod +x ./gdrive-download.sh && \
     mkdir -p /assets && \
     ./gdrive-download.sh 1AbhKB8d-saS6KENc9psmIv5O5j5jGHOy /assets/checkpoint_enhanced_fine.keras
 
+RUN ls -lh /assets
+
 # Copy app code
 COPY . .
 
