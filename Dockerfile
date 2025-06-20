@@ -17,18 +17,16 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Add Google Drive download script
-COPY gdrive-download.sh .
-RUN chmod +x ./gdrive-download.sh && \
-    mkdir -p /assets && \
-    ./gdrive-download.sh 1AbhKB8d-saS6KENc9psmIv5O5j5jGHOy /assets/checkpoint_enhanced_fine.keras && \
+# Download model file from Dropbox (force download with ?dl=1)
+RUN mkdir -p /assets && \
+    curl -L "https://www.dropbox.com/scl/fi/yxo946lqtq6xdd9t3iz6t/checkpoint_enhanced_fine.keras?rlkey=cx4zebv6uhqj7g3547cfmq4wq&st=bzjpg9gn&dl=1" -o /assets/checkpoint_enhanced_fine.keras && \
     ls -lh /assets
 
-# Copy the rest of your app
+# Copy application code
 COPY . .
 
 # Expose port
 EXPOSE 5000
 
-# Run your Flask app
+# Start the Flask app
 CMD ["python", "app.py"]
