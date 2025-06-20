@@ -17,10 +17,11 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Download model file from Dropbox (force download with ?dl=1)
-RUN mkdir -p /assets && \
-    curl -L "https://www.dropbox.com/scl/fi/yxo946lqtq6xdd9t3iz6t/checkpoint_enhanced_fine.keras?rlkey=cx4zebv6uhqj7g3547cfmq4wq&st=bzjpg9gn&dl=1" -o /assets/checkpoint_enhanced_fine.keras && \
-    ls -lh /assets
+# Download model file from Dropbox to /app/assets
+RUN mkdir -p /app/assets && \
+    curl -L "https://www.dropbox.com/scl/fi/yxo946lqtq6xdd9t3iz6t/checkpoint_enhanced_fine.keras?rlkey=cx4zebv6uhqj7g3547cfmq4wq&st=bzjpg9gn&dl=1" \
+    -o /app/assets/checkpoint_enhanced_fine.keras && \
+    ls -lh /app/assets
 
 # Copy application code
 COPY . .
